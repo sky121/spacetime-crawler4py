@@ -1,0 +1,10 @@
+-Implement scraper.py
+  - extract info from response
+  - return list of URLS scraped(valid ones, defragmented)
+  - Save the URL and the web page on your local disk.
+
+- count unique pages
+- count number of words in page and find longest page
+- 50 most common words and ordered by frequency
+- subdomains did you find in the ics.uci.edu domain
+
