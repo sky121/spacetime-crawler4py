@@ -9,11 +9,10 @@ def scraper(url, resp):
 def extract_next_links(url, resp):
     # Implementation requred.
     # Based on https://www.tutorialspoint.com/beautiful_soup/beautiful_soup_quick_guide.htm
-    print('TESTING: ',resp.url, resp.status)
-    '''soup = BeautifulSoup(resp.raw_response.text, "html.parser")
+    soup = BeautifulSoup(resp.raw_response.text, "html.parser")
     print(soup.title)
     for link in soup.find_all('a'):
-        print(link.get('href'))'''
+        print(link.get('href'))
     return list()
 
 def is_valid(url):
