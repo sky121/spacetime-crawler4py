@@ -3,8 +3,35 @@
   - return list of URLS scraped(valid ones, defragmented)
   - Save the URL and the web page on your local disk.
 
+Current Todo:
+- defragment links (DONE)
+- make sure to go over only the 5 URLS (DONE)
+- Check for infinite loops
 - count unique pages
-- count number of words in page and find longest page
+- count number of words in page and find the longest page
 - 50 most common words and ordered by frequency
 - subdomains did you find in the ics.uci.edu domain
 
+
+
+JSON URL Database:
+    ics.uci.edu:{
+        vision.ics.uci.edu:{
+            pages: [url1, url2]
+            count: 2
+        }
+        bio.ics.uci.edu:{
+            pages: [bio.ics.uci.edu/page1, bio.ics.uci.edu/page2]
+            count: 2
+        }
+    }
+    stats.uci.edu:{
+        vision.stats.uci.edu:{
+            pages: [url1, url2]
+            count: 2
+        }
+        bio.stats.uci.edu:{
+            pages: [bio.stats.uci.edu/page1, bio.stats.uci.edu/page2]
+        }
+    }
+  
