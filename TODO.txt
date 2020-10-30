@@ -6,32 +6,73 @@
 Current Todo:
 - defragment links (DONE)
 - make sure to go over only the 5 URLS (DONE)
-- Check for infinite loops
-- count unique pages
-- count number of words in page and find the longest page
+- Check for infinite loops (DONE)
+- count unique pages (DONE)
+- count number of words in page and find the longest page (DONE)
+- subdomains did you find in the ics.uci.edu domain (DONE)
 - 50 most common words and ordered by frequency
-- subdomains did you find in the ics.uci.edu domain
+- Detect and avoid sets of similar pages with no information
+- avoid crawling very large files, especially if they have low information value
+- dead URLs that return a 200 status but no data
 
+Extra:
+- Make sure we are not going over anything but webpages(double check) 
+
+Pages to AVOID:
+Detect and avoid infinite traps
+Detect and avoid sets of similar pages with no information
+Detect and avoid dead URLs that return a 200 status but no data
+Detect and avoid crawling very large files, especially if they have low information value
+
+
+
+important things to keep in mind:
+It is important to filter out urls that do not point to a webpage. For example, PDFs, PPTs, css, js, etc. The is_valid filters a large number of such extensions, but there may be more.
+It is important to maintain the politeness to the cache server (on a per domain basis).
+Launching multiple instances of the crawler will download the same urls in both. Mecahnisms can be used to avoid that, however the politeness limits still apply and will be checked.
+Do not attempt to download the links directly from ics servers.
 
 
 JSON URL Database:
-    ics.uci.edu:{
-        vision.ics.uci.edu:{
-            pages: [url1, url2]
-            count: 2
-        }
-        bio.ics.uci.edu:{
-            pages: [bio.ics.uci.edu/page1, bio.ics.uci.edu/page2]
-            count: 2
-        }
+{
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+    },
+    "vision.ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+    },
+    "bio.ics.uci.edu":{
+        "pages": ["bio.ics.uci.edu/page1", "bio.ics.uci.edu/page2"],
+        "count": 2
     }
-    stats.uci.edu:{
-        vision.stats.uci.edu:{
-            pages: [url1, url2]
-            count: 2
-        }
-        bio.stats.uci.edu:{
-            pages: [bio.stats.uci.edu/page1, bio.stats.uci.edu/page2]
-        }
+  },
+  "stats.uci.edu":{
+    "vision.stats.uci.edu":{
+        "pages": ["url1", "u"],
+        "count": 2
+    },
+    "bio.stats.uci.edu":{
+        "pages": ["bio.stats.uci.edu/page1", "bio.stats.uci.edu/page2"]
     }
+  },
+  "cs.uci.edu": {},
+  "informatics.uci.edu": {},
+  "today.uci.edu/department/information_computer_sciences": {}
+}
   
+Extra credit:
+(+1 points) Implement checks and usage of the robots and sitemap files.
+(+2 points) Implement exact and near webpage similarity detection using the methods discussed in the lecture. Your implementation must be made from scratch, no libraries are allowed.
+
+(+7 points) Make the crawler multithreaded. However, your multithreaded crawler MUST obey the politeness rule: two or more requests to the same domain, possibly from separate threads, must have a delay of 500ms (this is more tricky than it seems!). In order to do this part of the extra credit, you should read the "Architecture" section of the README.md file. Basically, to make a multithreaded crawler you will need to:
+
+Reimplement the Frontier so that it's thread-safe and so that it makes politeness per domain easy to manage
+
+Reimplement the Worker thread so that it's politeness-safe
+
+Set the THREADCOUNT variable in Config.ini to whatever number of threads you want
+
+If you multithreaded crawler is knocking down the server you may be penalized, so make sure you keep it polite (and note that it makes no sense to use a too large number of threads due to the politeness rule that you MUST obey).
