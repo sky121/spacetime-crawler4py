@@ -3,11 +3,7 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import json
 
-<<<<<<< Updated upstream
-high_word_cout = 0
-=======
 high_word_count = 0
->>>>>>> Stashed changes
 page_with_highest_word_count = None
 
 def check_url_domain(url):
@@ -124,8 +120,6 @@ def scraper(url, resp):
     if(word_count > high_word_count):
         high_word_count = word_count
         page_with_highest_word_count = url
-<<<<<<< Updated upstream
-=======
         save_page_count(high_word_count,page_with_highest_word_count)
     
     links = extract_next_links(url, resp)
@@ -136,7 +130,6 @@ def defragment_href(href):
     return defragmented
 
 def extract_next_links(url, resp):
->>>>>>> Stashed changes
     # Implementation requred.
     # Based on https://www.tutorialspoint.com/beautiful_soup/beautiful_soup_quick_guide.htm
     if(not resp.raw_response):
