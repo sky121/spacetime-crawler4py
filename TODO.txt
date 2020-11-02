@@ -8,7 +8,7 @@ Current Todo:
 - make sure to go over only the 5 URLS (DONE)
 - Check for infinite loops (DONE)
 - count unique pages (DONE)
-- count number of words in page and find the longest page (DONE)
+- count number of words in page and find the longest page 
 - subdomains did you find in the ics.uci.edu domain (DONE)
 - 50 most common words and ordered by frequency
 - Detect and avoid sets of similar pages with no information
@@ -35,6 +35,10 @@ Do not attempt to download the links directly from ics servers.
 
 JSON URL Database:
 {
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
   "ics.uci.edu":{
     "ics.uci.edu":{
         "pages": ["url1", "url2"],

@@ -3,7 +3,11 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import json
 
+<<<<<<< Updated upstream
 high_word_cout = 0
+=======
+high_word_count = 0
+>>>>>>> Stashed changes
 page_with_highest_word_count = None
 
 def check_url_domain(url):
@@ -50,13 +54,20 @@ def count_words_in_page(url, resp):
     for t in soup.find_all(text=True):
         if(t.parent.name not in blacklist):
             extracted_text.append(t)
-    #print(extracted_text)
+
     word_list = []
     for text in extracted_text:
         word_list.extend([word.lower() for word in re.findall("[a-zA-Z0-9]+", text)])
     return len(word_list)
     
     
+def save_page_count(pagecount,pageurl):
+    with open("URLdata.json", 'r') as database:
+        myFile = json.load(database)
+    with open("URLdata.json", "w") as database:
+        myFile["longest_page"]["word_count"] = pagecount
+        myFile["longest_page"]["url"] = pageurl
+        json.dump(myFile, database, indent=4)
 
 
 def save_url(url):
@@ -85,6 +96,7 @@ def database_contains_url(url):
     except (json.decoder.JSONDecodeError, FileNotFoundError):
         with open("URLdata.json", 'w') as database:
             format_dict = {
+                "longest_page": {"word_count":0, "url": ""},
                 "ics.uci.edu": {}, 
                 "stat.uci.edu": {},
                 "cs.uci.edu": {},
@@ -112,6 +124,19 @@ def scraper(url, resp):
     if(word_count > high_word_count):
         high_word_count = word_count
         page_with_highest_word_count = url
+<<<<<<< Updated upstream
+=======
+        save_page_count(high_word_count,page_with_highest_word_count)
+    
+    links = extract_next_links(url, resp)
+    return links
+
+def defragment_href(href):
+    defragmented = href.split('#')[0]
+    return defragmented
+
+def extract_next_links(url, resp):
+>>>>>>> Stashed changes
     # Implementation requred.
     # Based on https://www.tutorialspoint.com/beautiful_soup/beautiful_soup_quick_guide.htm
     if(not resp.raw_response):
