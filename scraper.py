@@ -200,8 +200,8 @@ def database_contains_url(url):
 
 def scraper(url, resp):
     global high_word_count, page_with_highest_word_count, word_frequency
-    if( len(resp.raw_response.text) < 1):
-       return list()
+    if( resp.raw_response == None or len(resp.raw_response.text) < 1):
+       return []
 
     if(database_contains_url(url)):
         return []
