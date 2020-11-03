@@ -1,6 +1,6 @@
 Current Bugs:
 - Downloaded http://cgvw.ics.uci.edu/, status <601>, using cache ('styx.ics.uci.edu', 9003).
-- Opening pdf at: http://www.informatics.uci.edu/files/pdf/InformaticsBrochure-March2018
+
 
 unreplicable bugs:
 - json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0) Downloaded https://www.stat.uci.edu/conference-honors-statistics-professor-emeritus-wesley-johnson, status <200>, using cache ('styx.ics.uci.edu', 9003).
@@ -19,8 +19,9 @@ Done:
 - 50 most common words and ordered by frequency (DONE)
 - Detect and avoid sets of similar pages with no information WE USE SIMHASH FOR THIS (DONE)
 - Not downloading correct links: Downloaded https://www.facebook.com/sharer.php?u=https%3a%2f%2fwww.ics.uci.edu%2f~iftekha%2fpublication%2fan-empirical-examination-of-the-relationship-between-code-smells-and-merge-conflicts%2f, status <604>, using cache ('styx.ics.uci.edu', 9003).
-- dead URLs that return a 200 status but no data
-- make checks for 404 status codes and skip
+- dead URLs that return a 200 status but no data (DONE)
+- make checks for 404 status codes and skip (DONE)
+- Opening pdf at: http://www.informatics.uci.edu/files/pdf/InformaticsBrochure-March2018 (DONE)
 
 
 Extra:
