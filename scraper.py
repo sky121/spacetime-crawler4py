@@ -90,6 +90,7 @@ def get_words_in_page(url, resp):
     'div',
     'body'
     ]
+    stopWords = 
     text = ""
     if(not resp.raw_response):
         return list()
@@ -100,8 +101,10 @@ def get_words_in_page(url, resp):
             extracted_text.append(t)
 
     word_list = []
-    for text in extracted_text:
-        word_list.extend([word.lower() for word in re.findall("[a-zA-Z0-9]+", text)])
+    with open("stop_words.txt", 'r') as stop_words:
+        for text in extracted_text:
+            word_list.extend([word.lower() for word in re.findall("[a-zA-Z0-9]+", text) if not in stop_words])
+    print(word_list)
 
     return word_list
 
