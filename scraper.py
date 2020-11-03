@@ -2,10 +2,12 @@ import re
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import json
+from hashlib import sha224
 
+global high_word_count, page_with_highest_word_count, word_frequency
 high_word_count = 0
-page_with_highest_word_count = None
-
+page_with_highest_word_count = ""
+word_frequency = dict()
 def check_url_domain(url):
     if(re.match(r"(.*\.ics\.uci\.edu.*)" , url)):
         return 'ics.uci.edu'
@@ -27,7 +29,53 @@ def get_subdomain(domain, url):
     else:
         return domain
 
-def count_words_in_page(url, resp):
+def computeWordFrequencies(token_list): 
+    local_pages_word_frequencies = dict()
+    for token in token_list: 
+        if token in local_pages_word_frequencies:
+            local_pages_word_frequencies[token]+=1
+        else:
+            local_pages_word_frequencies[token]=1
+    for token in token_list: 
+        if token in word_frequency:
+            word_frequency[token]+=1
+        else:
+            word_frequency[token]=1
+    return local_pages_word_frequencies
+
+def simhash(word_frequency_dict):
+    '''takes in the word frequency dict and output a binary vector for the ID of the website'''
+    bin_length = 256
+    total_vector = [0] * bin_length
+    for word, frequency in word_frequency_dict.items():
+        one_vector = list()
+        hash_val = bin(int(sha224(word.encode("utf-8")).hexdigest(), 16))[2:(bin_length+2)]
+        hash_len = len(hash_val)
+        
+        if (hash_len<bin_length):
+            difference = bin_length - hash_len
+            hash_val = ("0" * difference) + hash_val
+        for binary in hash_val:
+            if binary == "0":
+                one_vector.append(-1*word_frequency_dict[word])
+            else:
+                one_vector.append(word_frequency_dict[word])
+        
+        for indx in range(len(total_vector)):
+            total_vector[indx] += one_vector[indx]
+    binary_str = ""
+    for i in total_vector:
+        if i>0:
+            binary_str+="1"
+        else:
+            binary_str+="0"   
+            
+    return binary_str
+
+
+
+    
+def get_words_in_page(url, resp):
     #https://matix.io/extract-text-from-webpage-using-beautifulsoup-and-python/
     blacklist = [
     '[document]',
@@ -54,8 +102,46 @@ def count_words_in_page(url, resp):
     word_list = []
     for text in extracted_text:
         word_list.extend([word.lower() for word in re.findall("[a-zA-Z0-9]+", text)])
-    return len(word_list)
+
+    return word_list
+
+
+def check_duplicate_page(word_frequency_dict):
+    fingerprint = simhash(word_frequency_dict)
+    with open("URLdata.json", 'r') as database:
+        myFile = json.load(database)
+    with open("URLdata.json", "w") as database:
+        visited_websites = myFile["visited_website"]
+        threshold = 0.9
+        for each_website in visited_websites:
+            total = 0
+            xorval = bin(int(fingerprint, 2)^int(each_website, 2))[2:]
+            if (len(xorval)<len(fingerprint)):
+                difference = len(fingerprint)-len(xorval)
+            for i in xorval:
+                # we are forced to use xor but not xnor in this case
+                # counting 0 means two digits are the same in xor
+                if i == "0":
+                    total += 1
+            similarity = float(total)/len(fingerprint)
+            if similarity > threshold:
+                myFile["visited_website"][fingerprint] = fingerprint
+                json.dump(myFile, database, indent=4)
+                return True
+        myFile["visited_website"][fingerprint] = fingerprint
+        json.dump(myFile, database, indent=4)
+        return False
+        
     
+    
+
+def update_word_frequencies_in_database():
+    with open("URLdata.json", 'r') as database:
+        myFile = json.load(database)
+    with open("URLdata.json", "w") as database:
+        top50word = sorted(word_frequency.items(), key = lambda x: x[1], reverse=True)[:50]
+        myFile["top_50_words"] = top50word
+        json.dump(myFile, database, indent=4)
     
 def save_page_count(pagecount,pageurl):
     with open("URLdata.json", 'r') as database:
@@ -93,6 +179,8 @@ def database_contains_url(url):
         with open("URLdata.json", 'w') as database:
             format_dict = {
                 "longest_page": {"word_count":0, "url": ""},
+                "visited_website": {},
+                "top_50_words": [],
                 "ics.uci.edu": {}, 
                 "stat.uci.edu": {},
                 "cs.uci.edu": {},
@@ -111,12 +199,24 @@ def database_contains_url(url):
     return url in myFile[domain][subdomain]['pages']
 
 def scraper(url, resp):
+    global high_word_count, page_with_highest_word_count, word_frequency
+    if( len(resp.raw_response.text) < 1):
+       return list()
+
     if(database_contains_url(url)):
         return []
     if save_url(url) == -1:
         print("ERROR: url not saved")
+        return []
         
-    word_count = count_words_in_page(url,resp)
+    word_list = get_words_in_page(url,resp)
+    word_count = len(word_list)
+    word_frequency_dict = computeWordFrequencies(word_list)
+
+    if (check_duplicate_page(word_frequency_dict)):
+        return []
+    update_word_frequencies_in_database()
+    
     if(word_count > high_word_count):
         high_word_count = word_count
         page_with_highest_word_count = url
@@ -171,4 +271,3 @@ def is_valid(url):
 
     except TypeError:
         print ("TypeError for ", parsed)
-        raise

@@ -8,10 +8,10 @@ Current Todo:
 - make sure to go over only the 5 URLS (DONE)
 - Check for infinite loops (DONE)
 - count unique pages (DONE)
-- count number of words in page and find the longest page 
+- count number of words in page and find the longest page (DONE)
 - subdomains did you find in the ics.uci.edu domain (DONE)
-- 50 most common words and ordered by frequency
-- Detect and avoid sets of similar pages with no information
+- 50 most common words and ordered by frequency (DONE)
+- Detect and avoid sets of similar pages with no information WE USE SIMHASH FOR THIS (DONE)
 - avoid crawling very large files, especially if they have low information value
 - dead URLs that return a 200 status but no data
 
@@ -35,6 +35,102 @@ Do not attempt to download the links directly from ics servers.
 
 JSON URL Database:
 {
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
+  "longest_page": {
+    "word_count":0, 
+    "url": ""
+  },
+  "ics.uci.edu":{
+    "ics.uci.edu":{
+        "pages": ["url1", "url2"],
+        "count": 2
   "longest_page": {
     "word_count":0, 
     "url": ""
