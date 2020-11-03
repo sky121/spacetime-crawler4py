@@ -100,9 +100,13 @@ def get_words_in_page(url, resp):
             extracted_text.append(t)
 
     word_list = []
-    with open("stop_words.txt", 'r') as stop_words:
+    with open("stop_words.txt", 'r') as stopWordsFile:
+        stop_words = stopWordsFile.read()
         for text in extracted_text:
-            word_list.extend([word.lower() for word in re.findall("[a-zA-Z0-9]+", text) if not in stop_words])
+            words = [word.lower() for word in re.findall("[a-zA-Z0-9]+", text)]
+            for w in words:
+                if w not in stop_words:
+                    word_list.extend(w)
     print(word_list)
     return word_list
 
