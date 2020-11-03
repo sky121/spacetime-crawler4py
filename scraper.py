@@ -25,7 +25,6 @@ def check_url_domain(url):
 def get_subdomain(domain, url):
     subdomain = url.split(domain)
     if(len(subdomain)>0):
-        print("SUBDOMAIN =", subdomain[0])
         return subdomain[0] + domain
     else:
         return domain
