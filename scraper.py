@@ -112,7 +112,7 @@ def check_duplicate_page(word_frequency_dict):
         myFile = json.load(database)
     with open("URLdata.json", "w") as database:
         visited_websites = myFile["visited_website"]
-        threshold = 0.75
+        threshold = 0.9
         for each_website in visited_websites:
             total = 0
             xorval = bin(int(fingerprint, 2)^int(each_website, 2))[2:]
