@@ -1,3 +1,10 @@
+Current Bugs:
+- json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+- Opening pdf at: http://www.informatics.uci.edu/files/pdf/InformaticsBrochure-March2018
+- Looping through similar pages
+
+
+
 -Implement scraper.py
   - extract info from response
   - return list of URLS scraped(valid ones, defragmented)
