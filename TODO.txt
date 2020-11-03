@@ -1,5 +1,15 @@
+Last things to do:
+- check words top 50 words
+- merge kenos branch
+- improve tokenizer
+- should not download: "http://www.ics.uci.edu/~shantas/publications/19-privacy_smart_home_codaspy.ppsx"
+OPTIMIZE IS_VALID
+
+
+
+
 Current Bugs:
-- Downloaded http://cgvw.ics.uci.edu/, status <601>, using cache ('styx.ics.uci.edu', 9003).
+
 
 
 unreplicable bugs:
