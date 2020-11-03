@@ -267,7 +267,7 @@ def is_valid(url):
         stats_url_match = re.match(r"(.*\.stat\.uci\.edu.*)" , parsed.netloc)
         today_url_match = re.match(r"(today\.uci\.edu/department/information_computer_sciences.*)" , parsed.netloc)
 
-        url_match = cs_url_match or ics_url_match or informatics_url_match or stats_url_match or today_url_match or pdf_match
+        url_match = (cs_url_match or ics_url_match or informatics_url_match or stats_url_match or today_url_match) and not pdf_match
         file_type_match = not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
