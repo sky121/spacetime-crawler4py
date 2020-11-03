@@ -90,7 +90,6 @@ def get_words_in_page(url, resp):
     'div',
     'body'
     ]
-    stopWords = 
     text = ""
     if(not resp.raw_response):
         return list()
