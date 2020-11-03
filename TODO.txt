@@ -1,6 +1,6 @@
 Last things to do:
 - check words top 50 words IGNORE STOP WORDS
-- improve tokenizer
+- improve tokenizer What is the longest page in terms of the number of words? (HTML markup doesn’t count as words)
 - should not download: "http://www.ics.uci.edu/~shantas/publications/19-privacy_smart_home_codaspy.ppsx"
 OPTIMIZE IS_VALID
 
