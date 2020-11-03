@@ -1,7 +1,10 @@
 Current Bugs:
-- json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+- Not downloading correct links: Downloaded https://www.facebook.com/sharer.php?u=https%3a%2f%2fwww.ics.uci.edu%2f~iftekha%2fpublication%2fan-empirical-examination-of-the-relationship-between-code-smells-and-merge-conflicts%2f, status <604>, using cache ('styx.ics.uci.edu', 9003).
+- make checks for 404 and 601 status codes
+
+unreplicable bugs:
 - Opening pdf at: http://www.informatics.uci.edu/files/pdf/InformaticsBrochure-March2018
-- Looping through similar pages
+- json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0) Downloaded https://www.stat.uci.edu/conference-honors-statistics-professor-emeritus-wesley-johnson, status <200>, using cache ('styx.ics.uci.edu', 9003).
 
 
 
