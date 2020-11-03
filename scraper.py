@@ -105,7 +105,6 @@ def get_words_in_page(url, resp):
         for text in extracted_text:
             word_list.extend([word.lower() for word in re.findall("[a-zA-Z0-9]+", text) if not in stop_words])
     print(word_list)
-
     return word_list
 
 
