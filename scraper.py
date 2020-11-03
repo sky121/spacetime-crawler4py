@@ -168,6 +168,7 @@ def save_url(url):
             myFile[domain][subdomain] = {'pages': [], 'count': 0}
         myFile[domain][subdomain]['pages'].append(url)
         myFile[domain][subdomain]['count']+=1 
+        myFile["number_of_unique_pages"]+=1 
         json.dump(myFile, database, indent=4)
 
 def database_contains_url(url):
@@ -178,6 +179,7 @@ def database_contains_url(url):
     except (json.decoder.JSONDecodeError, FileNotFoundError):
         with open("URLdata.json", 'w') as database:
             format_dict = {
+                "number_of_unique_pages": 0,
                 "longest_page": {"word_count":0, "url": ""},
                 "visited_website": {},
                 "top_50_words": [],
@@ -200,11 +202,15 @@ def database_contains_url(url):
 
 def scraper(url, resp):
     global high_word_count, page_with_highest_word_count, word_frequency
+    if(resp.status >= 400 and resp.status < 600):
+        return []
+
     if( resp.raw_response == None or len(resp.raw_response.text) < 1):
        return []
 
     if(database_contains_url(url)):
         return []
+    
     if save_url(url) == -1:
         print("ERROR: url not saved")
         return []
@@ -212,7 +218,8 @@ def scraper(url, resp):
     word_list = get_words_in_page(url,resp)
     word_count = len(word_list)
     word_frequency_dict = computeWordFrequencies(word_list)
-
+    if(len(word_frequency_dict)<50):
+        return []
     if (check_duplicate_page(word_frequency_dict)):
         return []
     update_word_frequencies_in_database()
@@ -251,12 +258,13 @@ def is_valid(url):
         parsed = urlparse(url)
         if parsed.scheme not in set(["http", "https"]):
             return False
-        
-        ics_url_match = re.match(r"(.*\.ics\.uci\.edu.*)" , url)
-        cs_url_match = re.match(r"(.*\.cs\.uci\.edu.*)"  , url)
-        informatics_url_match = re.match(r"(.*\.informatics\.uci\.edu.*)" , url)
-        stats_url_match = re.match(r"(.*\.stat\.uci\.edu.*)" , url)
-        today_url_match = re.match(r"(today\.uci\.edu/department/information_computer_sciences.*)" , url)
+        pdf_match = re.match(r"(.*\/pdf\/.*)" , parsed.path)
+        ics_url_match = re.match(r"(.*\.ics\.uci\.edu.*)" , parsed.netloc)
+        cs_url_match = re.match(r"(.*\.cs\.uci\.edu.*)"  , parsed.netloc)
+        informatics_url_match = re.match(r"(.*\.informatics\.uci\.edu.*)" , parsed.netloc)
+        stats_url_match = re.match(r"(.*\.stat\.uci\.edu.*)" , parsed.netloc)
+        today_url_match = re.match(r"(today\.uci\.edu/department/information_computer_sciences.*)" , parsed.netloc)
+
         url_match = cs_url_match or ics_url_match or informatics_url_match or stats_url_match or today_url_match
         file_type_match = not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"

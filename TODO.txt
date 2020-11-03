@@ -1,29 +1,27 @@
 Current Bugs:
-- Not downloading correct links: Downloaded https://www.facebook.com/sharer.php?u=https%3a%2f%2fwww.ics.uci.edu%2f~iftekha%2fpublication%2fan-empirical-examination-of-the-relationship-between-code-smells-and-merge-conflicts%2f, status <604>, using cache ('styx.ics.uci.edu', 9003).
-- make checks for 404 and 601 status codes
+- Downloaded http://cgvw.ics.uci.edu/, status <601>, using cache ('styx.ics.uci.edu', 9003).
+- Opening pdf at: http://www.informatics.uci.edu/files/pdf/InformaticsBrochure-March2018
 
 unreplicable bugs:
-- Opening pdf at: http://www.informatics.uci.edu/files/pdf/InformaticsBrochure-March2018
 - json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0) Downloaded https://www.stat.uci.edu/conference-honors-statistics-professor-emeritus-wesley-johnson, status <200>, using cache ('styx.ics.uci.edu', 9003).
 
-
-
--Implement scraper.py
-  - extract info from response
-  - return list of URLS scraped(valid ones, defragmented)
-  - Save the URL and the web page on your local disk.
-
 Current Todo:
+ - tokenizer adds html tags: 50 top words getting html tags: body, metadata also getting letters: s, m numbers: 0
+
+Done:
+- count unique pages (DONE) -> OPTIMIZE make a varibale to hold that info
+- avoid crawling very large files, especially if they have low information value (DONE)
 - defragment links (DONE)
 - make sure to go over only the 5 URLS (DONE)
 - Check for infinite loops (DONE)
-- count unique pages (DONE)
 - count number of words in page and find the longest page (DONE)
 - subdomains did you find in the ics.uci.edu domain (DONE)
 - 50 most common words and ordered by frequency (DONE)
 - Detect and avoid sets of similar pages with no information WE USE SIMHASH FOR THIS (DONE)
-- avoid crawling very large files, especially if they have low information value
+- Not downloading correct links: Downloaded https://www.facebook.com/sharer.php?u=https%3a%2f%2fwww.ics.uci.edu%2f~iftekha%2fpublication%2fan-empirical-examination-of-the-relationship-between-code-smells-and-merge-conflicts%2f, status <604>, using cache ('styx.ics.uci.edu', 9003).
 - dead URLs that return a 200 status but no data
+- make checks for 404 status codes and skip
+
 
 Extra:
 - Make sure we are not going over anything but webpages(double check) 
