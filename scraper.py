@@ -98,7 +98,6 @@ def get_words_in_page(url, resp):
     for t in soup.find_all(text=True):
         if(t.parent.name not in blacklist):
             extracted_text.append(t)
-
     word_list = []
     with open("stop_words.txt", 'r') as stopWordsFile:
         stop_words = stopWordsFile.read()
