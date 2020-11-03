@@ -248,7 +248,7 @@ def extract_next_links(url, resp):
         if(not href or href=="#"):
             continue
         defragmented = defragment_href(href)
-        if(is_valid(defragmented) and not database_contains_url(defragmented)):
+        if(is_valid(href) and not database_contains_url(defragmented)):
             extracted_links.append(defragmented)
     return extracted_links
 
