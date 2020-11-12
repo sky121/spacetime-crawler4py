@@ -40,27 +40,32 @@ def store_index(merge_index):
             merge_index = sorted(merge_index.items(), key=lambda x: x[0])
             merge_index_iter = 0
             for line in old_index:
+                line = line.rstrip()
                 row = line.split(",")
-                old_index_token, old_index_num_docs = row.split(":")
+                old_index_token, old_index_num_docs = row[0].split(":")
                 done = False
                 while not done and merge_index_iter < len(merge_index):
                     merge_token_info = merge_index[merge_index_iter]
                     if old_index_token == merge_token_info[0]:
-                        new_num_docs = old_index_num_docs + \
-                            merge_token_info[1]["num_docs"]
+                        new_num_docs = int(old_index_num_docs) + \
+                            int(merge_token_info[1]["num_docs"])
                         merge_string = ""
                         for doc_ID, tf_idf in merge_token_info[1].items():
                             if doc_ID == "num_docs":
                                 continue
                             count = tf_idf["tf_idf"]
                             merge_string += f",{doc_ID}:{count}"
-                        final_string = f"{old_index_token}:{new_num_docs},{row[1:]}" + \
+                        old_index_doc_string = ""
+                        for doc_info in row[1:]:
+                            old_index_doc_string += doc_info + ","
+                        old_index_doc_string.strip(",")
+                        final_string = f"{old_index_token}:{new_num_docs},{old_index_doc_string}" + \
                             merge_string+"\n"
                         cache.write(final_string)
                         merge_index_iter += 1
                         done = True
                     elif old_index_token < merge_token_info[0]:
-                        cache.write(line)
+                        cache.write(line+"\n")
                         done = True
                     else:
                         merge_string = ""
