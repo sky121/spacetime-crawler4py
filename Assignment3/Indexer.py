@@ -4,7 +4,6 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import json
 from hashlib import sha224
-import pickle
 
 def get_tokens_in_page(content):
     #gets the list of tokens in the website content
@@ -22,39 +21,42 @@ def get_tokens_in_page(content):
 def get_hash(url):
     return sha224(url.encode("utf-8")).hexdigest()
 
-def initialize_database():
-    filename = "index"
-    with open(filename, 'wb') as database:
-        pickle.dump({"num_tokens":0}, database)
+def initialize_database(dir_name):
+    f = open(dir_name, 'w')
+    f.close()
 
 
-def store_index(index):
-    filename = "index"
-    with open(filename, 'rb') as database:
-        old_index = pickle.load(database)
-    with open(filename, 'wb') as database:
-        for token, docs in index.items():
-            if token == "num_tokens":
-                continue
-            if token in old_index:
-                old_index[token]["num_docs"]+=docs["num_docs"]
-                for doc_ID, doc_dict in docs.items():
-                    if doc_ID == "num_docs":
-                        continue
-                    old_index[token][doc_ID] = doc_dict
-            else:
-                old_index[token] = docs
-                old_index["num_tokens"] += 1
+# def store_index(index):
+#     filename = "index"
+#     with open(filename, 'r') as database:
+#         old_index = pickle.load(database)
+#     with open(filename, 'wb') as database:
+#         for token, docs in index.items():
+#             if token == "num_tokens":
+#                 continue
+#             if token in old_index:
+#                 old_index[token]["num_docs"]+=docs["num_docs"]
+#                 for doc_ID, doc_dict in docs.items():
+#                     if doc_ID == "num_docs":
+#                         continue
+#                     old_index[token][doc_ID] = doc_dict
+#             else:
+#                 old_index[token] = docs
+#                 old_index["num_tokens"] += 1
         
-        pickle.dump(old_index, database)  
+#         pickle.dump(old_index, database)  
+
+def store_index(dir_name, index):
+    with open(dir_name, 'w') as target:
+        target.write(str(index))
 
 def main():
-    initialize_database()
-    index = {"num_tokens":0}
+    index = {}
     num_docs = 0
-    num_tokens = 0
     website_id = 0
     for (dirpath, dirnames, filenames) in walk('./DEV'):
+        if (len(dirnames) == 0):
+            initialize_database(dirpath.split("\\")[1])
         for file_name in filenames: #looping through files in the directory DEV
             num_docs+=1
             in_file = open(f"{dirpath}/{file_name}", "r")
@@ -75,20 +77,11 @@ def main():
                             "tf_idf": 1
                         }
                     }
-                    index["num_tokens"] += 1
-                    num_tokens+=1
-        store_index(index)  
+        if (len(dirnames) == 0):
+            store_index(dirpath.split("\\")[1], index) 
         index.clear()
-        index = {"num_tokens":0}
-        #print(num_docs, num_tokens)
-       
-    print("number of documents: ",num_docs)
-    #print(num_tokens)
-    #store_index(index)  
-    with open('index', 'rb') as database:
-        index = pickle.load(database)
-        print("number of tokens: ",index['num_tokens'])
-
+        index = {}
+ 
     
 main() 
 
