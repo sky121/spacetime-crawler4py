@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import json
 from hashlib import sha224
+import pickle
 
 def get_tokens_in_page(content):
     #gets the list of tokens in the website content
@@ -22,14 +23,16 @@ def get_hash(url):
     return sha224(url.encode("utf-8")).hexdigest()
 
 def initialize_database():
-    with open("index.json", 'w') as database:
-        json.dump({"num_tokens":0}, database, indent=4)
+    filename = "index"
+    with open(filename, 'wb') as database:
+        pickle.dump({"num_tokens":0}, database)
 
 
 def store_index(index):
-    with open("index.json", 'r') as database:
-        old_index = json.load(database)
-    with open("index.json", "w") as database:
+    filename = "index"
+    with open(filename, 'rb') as database:
+        old_index = pickle.load(database)
+    with open(filename, 'wb') as database:
         for token, docs in index.items():
             if token == "num_tokens":
                 continue
@@ -43,7 +46,7 @@ def store_index(index):
                 old_index[token] = docs
                 old_index["num_tokens"] += 1
         
-        json.dump(old_index, database, indent=4)  
+        pickle.dump(old_index, database)  
 
 def main():
     initialize_database()
@@ -57,7 +60,7 @@ def main():
             in_file = open(f"{dirpath}/{file_name}", "r")
             website = json.load(in_file) #load the json of each file which contains {url, content, encoding}
             tokens = get_tokens_in_page(website["content"]) # tokens are the list of words in the website loaded
-            website_id += 1#get_hash(website['url'])
+            website_id += 1 # get_hash(website['url'])
             for token in tokens: 
                 if token in index: # If the token is already in the index just add 1 
                     if website_id in index[token]: # if the website is inside the index, we increment the frequency of the token for that website
@@ -77,7 +80,7 @@ def main():
         store_index(index)  
         index.clear()
         index = {"num_tokens":0}
-        #print(num_docs, num_tokens)
+        print(num_docs, num_tokens)
        
     print(num_docs)
     #print(num_tokens)
