@@ -80,11 +80,14 @@ def main():
         store_index(index)  
         index.clear()
         index = {"num_tokens":0}
-        print(num_docs, num_tokens)
+        #print(num_docs, num_tokens)
        
-    print(num_docs)
+    print("number of documents: ",num_docs)
     #print(num_tokens)
     #store_index(index)  
+    with open('index', 'rb') as database:
+        index = pickle.load(database)
+        print("number of tokens: ",index['num_tokens'])
 
     
 main() 
