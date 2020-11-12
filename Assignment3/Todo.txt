@@ -10,14 +10,24 @@ Deliverables: Submit your code and a report (in PDF format) with a table contain
 
 Index.json:
 {
-  "num_tokens":0,
   "token1":{
+    "num_docs":0,
+    "doc_id1":{
+      "tf_idf": 0
+    },
+  "token2":{
     "num_docs":0,
     "doc_id1":{
       "tf_idf": 0
     },
   },
 }
+
+index.txt
+
+token1:num_docs,doc_id1:tf_idf,doc_id2:tf_idf,doc_id3:tf_idf
+token2:num_docs,doc_id1:tf_idf,doc_id2:tf_idf
+token3:num_docs,doc_id1:tf_idf
 
 
 Note:
