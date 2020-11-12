@@ -128,10 +128,13 @@ def main():
         store_index(index)
         index.clear()
         index = {}
-        if filenames != []:
-            break
-        #print(num_docs, num_tokens)
 
+    with open("Index.txt", "r") as index:
+        num_of_line = 0
+        for line in index:
+            num_of_line += 1
+    print("number of unique tokens in Index: ", num_of_line)
+    print("Index file size:", path.getsize("Index.txt"))
     print("number of documents: ", num_docs)
 
 
