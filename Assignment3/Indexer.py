@@ -106,8 +106,11 @@ def main():
     index = {}
     num_docs = 0
     website_id = 0
+    threshold = 500
+    threshold_count = 0
     for (dirpath, _, filenames) in walk('./DEV'):
         for file_name in filenames:  # looping through files in the directory DEV
+            threshold_count+=1
             num_docs += 1
             in_file = open(f"{dirpath}/{file_name}", "r")
             # load the json of each file which contains {url, content, encoding}
@@ -130,9 +133,16 @@ def main():
                             "tf_idf": 1
                         }
                     }
-        store_index(index)
-        index.clear()
-        index = {}
+            if(threshold_count>threshold):
+                store_index(index)
+                index.clear()
+                index = {}
+                threshold_count = 0
+    
+    store_index(index)
+    index.clear()
+    index = {}
+        
 
     with open("Index.txt", "r") as index:
         num_of_line = 0
