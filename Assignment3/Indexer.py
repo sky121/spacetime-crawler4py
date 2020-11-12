@@ -1,5 +1,5 @@
 import re
-from os import walk
+from os import walk, path
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import json
@@ -88,6 +88,8 @@ def main():
     with open('index', 'rb') as database:
         index = pickle.load(database)
         print("number of tokens: ",index['num_tokens'])
+
+    # os.path.getsize("index")
 
     
 main() 
