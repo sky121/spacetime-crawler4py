@@ -16,7 +16,7 @@ def get_tokens_in_page(content):
     for _ in styles:
         soup.style.extract()
     tokens_found = soup.get_text()
-    tokens = [token.lower() for token in re.findall("[a-zA-Z]+", tokens_found)]
+    tokens = [token.lower() for token in re.findall("[a-zA-Z0-9]+", tokens_found)]
     return tokens
 
 
