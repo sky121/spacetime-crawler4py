@@ -16,7 +16,8 @@ def get_tokens_in_page(content):
     for _ in styles:
         soup.style.extract()
     tokens_found = soup.get_text()
-    tokens = [token.lower() for token in re.findall("[a-zA-Z0-9]+", tokens_found)]
+    tokens = [token.lower()
+              for token in re.findall("[a-zA-Z0-9]+", tokens_found)]
     return tokens
 
 
@@ -110,7 +111,7 @@ def main():
     threshold_count = 0
     for (dirpath, _, filenames) in walk('./DEV'):
         for file_name in filenames:  # looping through files in the directory DEV
-            threshold_count+=1
+            threshold_count += 1
             num_docs += 1
             in_file = open(f"{dirpath}/{file_name}", "r")
             # load the json of each file which contains {url, content, encoding}
@@ -133,16 +134,15 @@ def main():
                             "tf_idf": 1
                         }
                     }
-            if(threshold_count>threshold):
+            if(threshold_count > threshold):
                 store_index(index)
                 index.clear()
                 index = {}
                 threshold_count = 0
-    
+
     store_index(index)
     index.clear()
     index = {}
-        
 
     with open("Index.txt", "r") as index:
         num_of_line = 0

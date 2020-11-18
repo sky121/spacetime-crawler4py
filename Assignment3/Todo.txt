@@ -1,3 +1,23 @@
+Milestone 2
+
+At least the following queries should be used to test your retrieval:
+keyword:
+  1 – cristina lopes
+  2 - machine learning
+  3 - ACM
+  4 - master of software engineering
+the top 5 URLs for each of the queries above
+support boolean AND
+
+
+
+
+
+
+
+
+
+
 Milestone 1
 
 Inverted Index:
